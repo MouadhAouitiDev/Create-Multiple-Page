@@ -7,21 +7,19 @@ Version: 1.0
 Author: Mouadh Aouiti
 */
 
-// Enregistrement du shortcode
 function create_multiple_page_form_shortcode() {
-	ob_start(); // Commence la mise en mémoire tampon de sortie
+	ob_start();
 	?>
-	<div id="react-root"></div> <!-- Ceci est le conteneur pour votre application React -->
+	<div id="react-root"></div>
 	<?php
-	return ob_get_clean(); // Renvoie le contenu mis en mémoire tampon
+	return ob_get_clean();
 }
 add_shortcode('create_multiple_page_form', 'create_multiple_page_form_shortcode');
 
-// Enqueue React et les scripts du plugin
 function cmp_enqueue_scripts() {
 	wp_enqueue_script(
 		'cmp-react-app',
-		plugins_url('dist/bundle.js', __FILE__), // Modifiez ici pour pointer vers le fichier bundle.js
+		plugins_url('dist/bundle.js', __FILE__),
 		array('wp-element', 'wp-api'),
 		'1.0',
 		true
@@ -34,7 +32,6 @@ function cmp_enqueue_scripts() {
 }
 add_action('wp_enqueue_scripts', 'cmp_enqueue_scripts');
 
-// Register REST API endpoint for creating pages
 add_action('rest_api_init', function () {
 	register_rest_route('cmp/v1', '/create-pages', array(
 		'methods'             => 'POST',
@@ -45,7 +42,6 @@ add_action('rest_api_init', function () {
 	));
 });
 
-// Callback function to create pages
 function cmp_create_pages($request) {
 	$titles      = $request['titles'];
 	$description = sanitize_textarea_field($request['description']);

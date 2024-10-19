@@ -5,7 +5,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: '/dist/' // Assurez-vous que le chemin public est défini correctement
+        publicPath: '/dist/', // Ensure the public path is set correctly
     },
     module: {
         rules: [
@@ -15,6 +15,10 @@ module.exports = {
                 use: {
                     loader: 'babel-loader',
                 },
+            },
+            {
+                test: /\.css$/, // Handle CSS files
+                use: ['style-loader', 'css-loader'],
             },
         ],
     },
